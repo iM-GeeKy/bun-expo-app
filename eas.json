@@ -1,0 +1,14 @@
+{
+  "build": {
+    "develop": {
+      "channel": "develop",
+      "distribution": "internal"
+    }
+  },
+  "cli": {
+    "appVersionSource": "remote"
+  },
+  "submit": {
+    "production": {}
+  }
+}
