@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "95dcd429-d5bb-4c64-ab6d-07b170826796"
+      }
+    },
+    "owner": "fitzwabs"
   }
 }
