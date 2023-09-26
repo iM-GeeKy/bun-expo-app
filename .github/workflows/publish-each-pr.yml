@@ -1,0 +1,46 @@
+# This action allows you to automate expo build previews on pull requests to test your Expo app builds!
+# https://docs.expo.dev/eas-update/github-actions/#publish-previews-on-pull-requests
+name: Expo Preview
+
+on: [pull_request]
+
+jobs:
+  publish:
+    name: 📦 Install and 🚀 publish
+    needs: [Test]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: ✅ Check for EXPO_TOKEN
+        run: |
+          if [ -z "${{ secrets.EXPO_TOKEN }}" ]; then
+            echo "You must provide an EXPO_TOKEN secret linked to this project's Expo account in this repo's secrets. Learn more: https://docs.expo.dev/eas-update/github-actions"
+            exit 1
+          fi
+
+      - name: 🏗 Setup repo
+        uses: actions/checkout@v3
+
+      - name: 🏗 Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: 🏗 Setup Expo and EAS
+        uses: expo/expo-github-action@v7
+        with:
+          expo-version: latest
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+          expo-cache: true
+          packager: bun
+
+      - name: 📦 Install dependencies
+        run: bun install
+
+      - name: 🚀 Create preview
+        uses: expo/expo-github-action/preview@v8
+        with:
+          command: eas update --auto
