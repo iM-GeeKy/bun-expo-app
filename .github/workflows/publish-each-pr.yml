@@ -7,7 +7,6 @@ on: [pull_request]
 jobs:
   publish:
     name: 📦 Install and 🚀 publish
-    needs: [Test]
     runs-on: ubuntu-latest
     permissions:
       contents: read
